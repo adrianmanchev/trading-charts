@@ -40,7 +40,8 @@ export default {
     url: '/api/v3/klines',
     params: {
       symbol: symbol,
-      interval: interval
+      interval: interval,
+      limit: 145
     }
   })
 }

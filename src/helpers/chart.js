@@ -4,7 +4,6 @@ export default (data, {
   x = ([x]) => x,
   y = ([, y]) => parseFloat(y),
   curve = d3.curveMonotoneX,
-  ease = d3.easeLinear,
   duration = 230,
   marginTop = 0,
   marginRight = 48,
@@ -16,7 +15,6 @@ export default (data, {
   xRange = [marginLeft, width - marginRight],
   yType = d3.scaleLinear,
   yRange = [height - marginBottom, marginTop],
-  color = 'currentColor',
   strokeLinecap = 'round',
   strokeLinejoin = 'round',
   strokeWidth = 1.5,
@@ -30,12 +28,20 @@ export default (data, {
   const px = 34
   const py = 16
   const chartWidth = width - marginRight - marginLeft
+  const chartHeight = height - marginTop - marginBottom
+
+  const colors = {
+    up: '#34c759',
+    down: '#ff2d55',
+    live: '#e5e5ea',
+    tooltip: '#f2f2f7',
+    crosshair: '#2c2c2e'
+  }
 
   let X = null
   let Y = null
   let I = null
 
-  let defined = null
   let D = null
 
   let xDomain = null
@@ -47,13 +53,14 @@ export default (data, {
   let xAxis = null
   let yAxis = null
 
+  let O = null
+
   const init = () => {
     X = d3.map(data, x)
     Y = d3.map(data, y)
     I = d3.map(data, (_, i) => i)
 
-    defined = (d, i) => X[i] && Y[i]
-    D = d3.map(data, defined)
+    D = d3.map(data, (d, i) => X[i] && Y[i])
 
     const yt = height / 80
     const ymin = d3.min(Y)
@@ -75,6 +82,8 @@ export default (data, {
 
     xAxis = d3.axisBottom(xScale).ticks(width / 80).tickSize(3).tickSizeOuter(0)
     yAxis = d3.axisRight(yScale).ticks(yt).tickSize(3).tickSizeOuter(0)
+
+    O = yScale(Y[0])
   }
 
   init()
@@ -97,11 +106,59 @@ export default (data, {
     .y(i => yScale(Y[i]))
 
   const area = d3.area()
-    .defined(i => D[i])
+    .defined(line.defined())
     .curve(curve)
-    .x(i => xScale(X[i]))
-    .y0(height - marginTop - marginBottom)
-    .y1(i => yScale(Y[i]))
+    .x(line.x())
+    .y0(line.y())
+    .y1(O)
+
+  const UPDATE_AREA = s => s.attr('d', area(I))
+  const UPDATE_LINE = s => s.attr('d', line(I))
+  const UPDATE_DEFINED = s => s.attr('d', line(I.filter(i => D[i])))
+  const UPDATE_TEXT = s => s.selectAll('text').text(price(total - 1))
+  const UPDATE_TICK = s => s.attr('transform', `translate(${width - marginRight}, ${yScale(Y[total - 1])})`)
+
+  const UPDATE_AREA_COLORS = s => s.selectAll('stop')
+    .data([
+      {
+        offset: 0,
+        color: colors.up
+      },
+      {
+        offset: O / chartHeight,
+        color: 'white'
+      },
+      {
+        offset: 1,
+        color: colors.down
+      }
+    ])
+    .join('stop')
+    .attr('offset', d => d.offset)
+    .attr('stop-color', d => d.color)
+    .attr('stop-opacity', 0.3)
+  const UPDATE_STROKE_COLORS = s => s.selectAll('stop')
+    .data([
+      {
+        offset: 0,
+        color: colors.up
+      },
+      {
+        offset: O / chartHeight,
+        color: colors.up
+      },
+      {
+        offset: O / chartHeight,
+        color: colors.down
+      },
+      {
+        offset: 1,
+        color: colors.down
+      }
+    ])
+    .join('stop')
+    .attr('offset', d => d.offset)
+    .attr('stop-color', d => d.color)
 
   const svg = d3.create('svg:svg')
     .attr('width', width)
@@ -114,35 +171,37 @@ export default (data, {
 
   const defs = svg.append('svg:defs')
 
-  const dropShadow = defs.append('filter')
+  defs.append('filter')
     .attr('id', 'dropShadow')
-
-  dropShadow.append('feDropShadow')
+    .append('feDropShadow')
     .attr('dx', 0)
     .attr('dy', 0.7)
     .attr('stdDeviation', 1)
     .attr('flood-opacity', 0.21)
 
+  const linearGradient = defs.append('linearGradient')
+    .attr('id', 'linearGradient')
+    .attr('gradientUnits', 'userSpaceOnUse')
+    .attr('x1', 0)
+    .attr('y1', 0)
+    .attr('x2', 0)
+    .attr('y2', chartHeight)
+    .call(UPDATE_STROKE_COLORS)
+
   const areaGradient = defs.append('linearGradient')
     .attr('id', 'areaGradient')
-    .attr('x1', '0%').attr('y1', '0%')
-    .attr('x2', '0%').attr('y2', '100%')
-
-  areaGradient.append('stop')
-    .attr('offset', '0%')
-    .attr('stop-color', color)
-    .attr('stop-opacity', 0.6)
-
-  areaGradient.append('stop')
-    .attr('offset', '80%')
-    .attr('stop-color', 'white')
-    .attr('stop-opacity', 0)
+    .attr('gradientUnits', 'userSpaceOnUse')
+    .attr('x1', '0%')
+    .attr('x2', '0%')
+    .attr('y1', '0%')
+    .attr('y2', '100%')
+    .call(UPDATE_AREA_COLORS)
 
   const gx = svg.append('g')
     .attr('transform', `translate(0, ${height - marginBottom})`)
     .call(xAxis)
     .attr('font-family', 'inherit')
-    .call(g => g.selectAll('.domain').remove())
+    .call(g => g.select('.domain').attr('stroke-width', 0))
     .call(g => g.selectAll('.tick line')
       .attr('stroke-opacity', 0.50))
 
@@ -150,7 +209,7 @@ export default (data, {
     .attr('transform', `translate(${width - marginRight}, 0)`)
     .call(yAxis)
     .attr('font-family', 'inherit')
-    .call(g => g.selectAll('.domain').remove())
+    .call(g => g.select('.domain').attr('stroke-width', 0))
     .call(g => g.selectAll('.tick line')
       .attr('stroke-opacity', 0.50)
       .clone()
@@ -159,36 +218,36 @@ export default (data, {
 
   const areaPath = svg.append('path')
     .attr('fill', 'url(#areaGradient)')
-    .attr('d', area(I))
+    .call(UPDATE_AREA)
 
   const definedPath = svg.append('path')
     .attr('fill', 'none')
-    .attr('stroke', color)
+    .attr('stroke', colors.crosshair)
     .attr('stroke-width', strokeWidth)
-    .attr('stroke-opacity', 0.9)
+    .attr('stroke-opacity', 0.21)
     .attr('stroke-dasharray', '1, 4')
-    .attr('d', line(I.filter(i => D[i])))
+    .call(UPDATE_DEFINED)
 
   const linePath = svg.append('path')
     .attr('fill', 'none')
-    .attr('stroke', color)
+    .attr('stroke', 'url(#linearGradient)')
     .attr('stroke-width', strokeWidth)
     .attr('stroke-linecap', strokeLinecap)
     .attr('stroke-linejoin', strokeLinejoin)
     .attr('stroke-opacity', strokeOpacity)
-    .attr('d', line(I))
+    .call(UPDATE_LINE)
 
   const live = svg.append('g')
     .style('pointer-events', 'none')
-    .attr('transform', `translate(${width - marginRight}, ${yScale(Y[total - 1])})`)
+    .call(UPDATE_TICK)
 
   live.selectAll('line')
     .data([null])
     .join('line')
     .attr('fill', 'none')
     .attr('stroke-width', 0.5)
-    .attr('stroke', color)
-    .attr('stroke-opacity', 1)
+    .attr('stroke', colors.crosshair)
+    .attr('stroke-opacity', 0.5)
     .attr('stroke-dasharray', '2, 2')
     .attr('x1', chartWidth * -1)
     .attr('x2', 0)
@@ -201,18 +260,17 @@ export default (data, {
     .attr('rx', 2)
     .attr('ry', 2)
     .attr('x', 0)
-    .attr('fill', color)
+    .attr('fill', colors.live)
 
   live.selectAll('text')
-    .data([price(total - 1)])
+    .data([null])
     .join('text')
-    .attr('fill', 'white')
     .attr('font-size', '10px')
     .attr('font-weight', 'bold')
     .attr('x', ax)
     .attr('y', 4)
-    .text(d => d)
 
+  live.call(UPDATE_TEXT)
   setTimeout(() => {
     const livetextBox = live.selectAll('text').node().getBBox()
     live.selectAll('rect')
@@ -289,7 +347,7 @@ export default (data, {
       .join('line')
       .attr('fill', 'none')
       .attr('stroke-width', 0.5)
-      .attr('stroke', 'black')
+      .attr('stroke', colors.crosshair)
       .attr('stroke-opacity', 0.5)
       .attr('stroke-dasharray', '2, 2')
       .attr('x1', (_, i) => i ? (width - sx - marginRight) : x)
@@ -300,9 +358,12 @@ export default (data, {
     tooltip.selectAll('circle')
       .data([null])
       .join('circle')
-      .attr('r', 3)
+      .attr('r', 4)
       .attr('cx', x)
-      .attr('fill', color)
+      .attr('fill', sy >= O ? colors.down : colors.up)
+      .attr('stroke', 'white')
+      .attr('stroke-width', 2)
+      .attr('stroke-opacity', 1)
       .attr('cy', y + 11)
 
     pricetip.selectAll('text')
@@ -320,7 +381,7 @@ export default (data, {
       .join('rect')
       .attr('rx', 2)
       .attr('ry', 2)
-      .attr('fill', '#efeff4')
+      .attr('fill', colors.tooltip)
 
     pricetip.selectAll('text')
       .data([null])
@@ -344,7 +405,7 @@ export default (data, {
       .join('rect')
       .attr('rx', 2)
       .attr('ry', 2)
-      .attr('fill', '#efeff4')
+      .attr('fill', colors.tooltip)
       .attr('y', height - marginBottom - sy)
 
     const datetext = datetip.selectAll('text')
@@ -393,38 +454,31 @@ export default (data, {
 
     init()
 
+    area.y1(O)
+    areaGradient.call(UPDATE_AREA_COLORS)
+    linearGradient.call(UPDATE_STROKE_COLORS)
+
     gx.transition()
       .duration(duration)
-      .ease(ease)
       .call(xAxis)
-    gx.call(g => g.selectAll('.domain').remove())
-
     gy.transition()
       .duration(duration)
-      .ease(ease)
       .call(yAxis)
-    gy.call(g => g.selectAll('.domain').remove())
 
-    linePath.transition()
-      .duration(duration)
-      .ease(ease)
-      .attr('d', line(I))
-    definedPath.transition()
-      .duration(duration)
-      .ease(ease)
-      .attr('d', line(I.filter(i => D[i])))
     areaPath.transition()
       .duration(duration)
-      .ease(ease)
-      .attr('d', area(I))
-
-    live.transition()
+      .call(UPDATE_AREA)
+    definedPath.transition()
       .duration(duration)
-      .each(ease)
-      .attr('transform', `translate(${width - marginRight}, ${yScale(Y[total - 1])})`)
+      .call(UPDATE_DEFINED)
+    linePath.transition()
+      .duration(duration)
+      .call(UPDATE_LINE)
 
-    live.selectAll('text')
-      .text([price(total - 1)])
+    live.call(UPDATE_TEXT)
+      .transition()
+      .duration(duration)
+      .call(UPDATE_TICK)
   }
 
   d3.select(element).append(() => svg.node())

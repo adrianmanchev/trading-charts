@@ -55,8 +55,7 @@ export default {
     onSuccess (response) {
       this.loading = false
       this.$nextTick(() => {
-        this.fn = chart(response.data.map(([t, o, h, l, c]) => [t, c]).splice(-120), {
-          color: 'var(--bs-primary)',
+        this.fn = chart(response.data.map(([t, o, h, l, c]) => [t, c]), {
           priceScale: this.priceScale,
           priceUnit: this.priceUnit,
           width: document.getElementById('price-chart').offsetWidth

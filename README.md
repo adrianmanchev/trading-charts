@@ -2,6 +2,12 @@
 
 Example Vue.js website demonstrating how to listen to the Binance Websocket server and trade charts using d3.js.
 
+![Bitcoin to Tether chart](https://raw.githubusercontent.com/adrianmanchev/adrianmanchev.github.io/main/static/preview-trading-charts.png)
+
+## Demo
+
+⚡️ [https://adrianmanchev.github.io/trading-charts](https://adrianmanchev.github.io/trading-charts)
+
 ## Shortcodes
 
 ### D3

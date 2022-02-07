@@ -130,6 +130,10 @@ export default createStore({
     baseUnits: 'usdt',
     graphOptions: {
       interval: '15m'
+    },
+    graphStats: {
+      min: 0,
+      max: 0
     }
   },
   getters: {
@@ -146,6 +150,9 @@ export default createStore({
     getInfoBySlug: (state) => (slug) => {
       const pair = slugs[slug].toLowerCase() + '' + state.baseUnits
       return state.infos[pair] || {}
+    },
+    getGraphStats: (state) => () => {
+      return state.graphStats || {}
     }
   },
   mutations: {
@@ -164,6 +171,12 @@ export default createStore({
     UPDATE_GRAPH_OPTIONS: (state, payload) => {
       state.graphOptions = {
         ...state.graphOptions,
+        ...payload
+      }
+    },
+    UPDATE_GRAPH_STATS: (state, payload) => {
+      state.graphStats = {
+        ...state.graphStats,
         ...payload
       }
     }

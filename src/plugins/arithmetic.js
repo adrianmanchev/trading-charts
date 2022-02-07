@@ -64,5 +64,10 @@ const arithmetic = {
 export default {
   install: (app, options) => {
     app.config.globalProperties.$arithmetic = arithmetic
+    app.config.globalProperties.$filters = {
+      format (value, scale) {
+        return arithmetic.format(arithmetic.fix(value, scale))
+      }
+    }
   }
 }

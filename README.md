@@ -18,7 +18,6 @@ Create a line chart with historical close prices for the time series and change 
 import chart from '@/helpers/chart'
 
 const draw = chart(data, {
-  color: '#0d6efd',
   width: 960
 })
 

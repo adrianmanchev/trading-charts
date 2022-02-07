@@ -9,7 +9,7 @@
           <div class="p-3">
             <code>
               <pre>{{ `import chart from '@/helpers/chart'` }}</pre>
-              <pre>{{ `const draw = chart(data, {\n\tcolor: '#0d6efd',\n\twidth: 960\n})` }}</pre>
+              <pre>{{ `const draw = chart(data, {\n\twidth: 960\n})` }}</pre>
               <pre class="mb-0">{{ `draw.update(price)` }}</pre>
             </code>
           </div>

@@ -38,6 +38,7 @@ export default {
           direction: arithmetic.isLt(change, 0) ? 'down' : 'up',
           pair: pair,
           localePrice: arithmetic.format(arithmetic.fix(price, priceScale)),
+          changePrice: arithmetic.format(arithmetic.fix(arithmetic.minus(price, arithmetic.div(price, arithmetic.plus(arithmetic.div(change, 100), 1))), priceScale)),
           price: price,
           time: response.data.E
         })

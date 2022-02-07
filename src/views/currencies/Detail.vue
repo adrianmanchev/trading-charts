@@ -39,6 +39,41 @@
           </template>
         </div>
       </div>
+      <div class="mt-3">
+        <h3 class="fs-4 fw-normal">Overview</h3>
+        <div class="d-flex flex-column flex-xl-row gap-3">
+          <div class="d-ticker-card border rounded pt-3 pb-2 ps-3 pe-4">
+            <div class="d-ticker-card-header d-flex align-items-center gap-3">
+              <img v-bind:src="currency.logo" v-bind:alt="currency.name" width="32" height="32" class="rounded-circle" />
+              <div class="d-ticker-card-title">
+                <h2 class="fs-6 fw-bold mb-0">{{ info.symbol }} {{ info.quote }}</h2>
+                <h3 class="fs-6 fw-light mb-0">{{ info.name }} / {{ info.unit }}</h3>
+              </div>
+            </div>
+            <div class="d-ticker-card-body mt-2 text-nowrap">
+              <span class="d-ticker-card-price fs-4 fw-bold">{{ ticker.localePrice }}</span>
+              <span class="d-ticker-card-change ms-4"><arrow v-bind:direction="ticker.direction" /> {{ ticker.change }} %</span>
+              <span class="d-ticker-card-rate ms-2 text-secondary">({{ ticker.changePrice }} {{ info.quote }})</span>
+            </div>
+          </div>
+          <div class="d-ticker-card border rounded pt-3 pb-2 ps-3 pe-4 flex-fill">
+            <div class="d-ticker-card-header">
+              <div class="d-ticker-card-title">
+                <h2 class="fs-6 fw-normal mb-0 text-nowrap">{{ info.name }} low and high prices in selected time frame</h2>
+              </div>
+            </div>
+            <div class="d-ticker-card-body mt-4">
+              <div class="position-relative pb-4">
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" v-bind:style="'width: ' + progressWidth + '%'" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="position-absolute bottom-0 start-0">{{ $filters.format(stats.low, info.priceScale) }}</small>
+                <small class="position-absolute bottom-0 end-0">{{ $filters.format(stats.high, info.priceScale) }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="border rounded p-3 mt-3">
         <h3 class="fs-4 fw-normal">What is {{ currency.name }}?</h3>
         <p>{{ currency.about }}</p>
@@ -74,6 +109,12 @@ export default {
     },
     info () {
       return this.$store.getters.getInfoBySlug(this.slug)
+    },
+    stats () {
+      return this.$store.getters.getGraphStats()
+    },
+    progressWidth () {
+      return this.ticker.price && this.stats.low && this.stats.high ? this.$arithmetic.fix(this.$arithmetic.times(this.$arithmetic.div(100, this.$arithmetic.minus(this.stats.high, this.stats.low)), this.$arithmetic.minus(this.ticker.price, this.stats.low)), 2) : 0
     }
   }
 }

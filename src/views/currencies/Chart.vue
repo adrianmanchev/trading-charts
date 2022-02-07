@@ -54,8 +54,21 @@ export default {
   methods: {
     onSuccess (response) {
       this.loading = false
+      const ticks = response.data.map(([t, o, h, l, c]) => [t, c])
+      const [low, high] = ticks.reduce((acc, val) => {
+        val = parseFloat(val[1])
+        acc[0] = (acc[0] === undefined || val < acc[0]) ? val : acc[0]
+        acc[1] = (acc[1] === undefined || val > acc[1]) ? val : acc[1]
+        return acc
+      }, [])
+
+      this.$store.commit('UPDATE_GRAPH_STATS', {
+        low: low,
+        high: high
+      })
+
       this.$nextTick(() => {
-        this.fn = chart(response.data.map(([t, o, h, l, c]) => [t, c]), {
+        this.fn = chart(ticks, {
           priceScale: this.priceScale,
           priceUnit: this.priceUnit,
           width: document.getElementById('price-chart').offsetWidth

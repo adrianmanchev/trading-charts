@@ -1,0 +1,20 @@
+{
+  "about": "Hakkında",
+  "home": "Anasayfa",
+  "shortcodes": "Kod betikleri",
+  "description": "Websocket ile Binance bağlantısı kurulumu ve güncel kripto para fiyatlarının D3.js kullanılarak nasıl bir fiyat grafiğine dönüştüreleceğini gösteren örnek Vue.js projesi",
+  "overview": "Genel Bakış",
+  "trending": "Trend varlıklar",
+  "trendingdescription": "Kripto para borsalarda tüm zamanlarda popüleritesi en fazla olan varlıklar.",
+  "currencyprice": "{name} fiyatı",
+  "more": "{action} için daha fazla bilgi ve fiyat grafiklerini inceleyin.",
+  "top": "Popüler krito paralar",
+  "toptitle": "Popüler Krito Paralar",
+  "sourcecode": "KAYNAK KODU",
+  "liveprices": "Güncel Fiyatlar",
+  "detail": "Detay",
+  "name": "İsim",
+  "price": "Fiyat",
+  "dailychange": "Günlük değişim",
+  "highlow": "Seçilen zaman diliminde en düşük ve en yüksek fiyatlar"
+}

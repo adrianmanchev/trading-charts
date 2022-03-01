@@ -3,13 +3,13 @@
     <div class="table-responsive">
       <table class="table table-hover align-middle">
         <caption class="display-6 caption-top">
-          Live Prices
+          {{ $t('liveprices') }}
         </caption>
         <thead class="table-head">
           <tr>
-            <th>Name</th>
-            <th class="text-end">Daily Change</th>
-            <th class="text-end">Price</th>
+            <th>{{ $t('name') }}</th>
+            <th class="text-end">{{ $t('dailychange') }}</th>
+            <th class="text-end">{{ $t('price') }}</th>
             <th class="text-end"></th>
           </tr>
         </thead>
@@ -18,7 +18,11 @@
         </tbody>
       </table>
     </div>
-    <p>Find out more information and trading charts for <router-link to="/currencies" title="Top Currencies">top currencies</router-link>.</p>
+    <i18n-t keypath="more" tag="p">
+      <template v-slot:action>
+        <router-link to="/currencies" v-bind:title="$t('toptitle')">{{ $t('top') }}</router-link>
+      </template>
+    </i18n-t>
   </div>
 </template>
 

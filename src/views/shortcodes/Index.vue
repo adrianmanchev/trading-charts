@@ -1,10 +1,10 @@
 <template>
   <main class="container my-4">
-    <h2 class="display-6 mb-4">Shortcodes</h2>
+    <h2 class="display-6 mb-4">{{ $t('shortcodes') }}</h2>
     <div class="row gy-3">
       <div class="col-12">
-        <h3 class="fs-4 fw-normal">D3</h3>
-        <p class="col-lg-6">Create a line chart with historical close prices for the time series and change the tick price.</p>
+        <h3 class="fs-4 fw-normal">D3.js</h3>
+        <p class="col-lg-6">{{ $t('chart') }}</p>
         <div class="col-lg-6 bg-light shadow-sm rounded">
           <div class="p-3">
             <code>
@@ -20,7 +20,7 @@
       </div>
       <div class="col-12">
         <h3 class="fs-4 fw-normal">Binance</h3>
-        <p class="col-lg-6">Request historical klines data for a certain symbol over a specified time period. For drawing line charts inside payload data, use time and close price.</p>
+        <p class="col-lg-6">{{ $t('binance') }}</p>
         <div class="col-lg-6 bg-light shadow-sm rounded">
           <div class="p-3">
             <code>
@@ -35,3 +35,21 @@
     </div>
   </main>
 </template>
+
+<i18n>
+{
+  "bg": {
+    "binance": "Изисквайте исторически данни за клинове за определен символ за определен период от време. За начертаване на линейни диаграми в данните за полезен товар използвайте време и цена на затваряне.",
+    "chart": "Създайте линейна диаграма с исторически цени на затваряне за времевите серии и променете цената на тик."
+  },
+  "en": {
+    "binance": "Request historical klines data for a certain symbol over a specified time period. For drawing line charts inside payload data, use time and close price.",
+    "chart": "Create a line chart with historical close prices for the time series and change the tick price."
+  },
+  "tr": {
+    "binance": "Belirli bir süre boyunca belirli bir sembol için geçmiş kline verilerini isteyin. Yük verileri içinde çizgi grafikleri çizmek için zaman ve kapanış fiyatını kullanın.",
+    "chart": "Fiyat grafiği için kapanış fiyatlarıyla bir çizgi grafik oluşturun ve son işlem fiyatını güncelleyin."
+  }
+}
+}
+</i18n>

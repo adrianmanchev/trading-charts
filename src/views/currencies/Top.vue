@@ -1,5 +1,5 @@
 <template>
-  <h2 class="display-6 mb-4">Top Currencies</h2>
+  <h2 class="display-6 mb-4">{{ $t('toptitle') }}</h2>
   <div class="row gy-3">
     <template v-for="item in topCurrencies" v-bind:key="item.symbol">
       <div class="col">

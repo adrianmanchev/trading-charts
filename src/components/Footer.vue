@@ -6,9 +6,9 @@
       </template>
     </div>
     <ul class="list-inline">
-      <li class="list-inline-item"><router-link class="nav-link" to="/" title="Home" exact>Home</router-link></li>
-      <li class="list-inline-item"><router-link class="nav-link" to="/shortcodes" title="Home" exact>Shortcodes</router-link></li>
-      <li class="list-inline-item"><a class="nav-link" href="https://github.com/adrianmanchev" target="_blank">About</a></li>
+      <li class="list-inline-item"><router-link class="nav-link" to="/" v-bind:title="$t('home')" exact>{{ $t('home') }}</router-link></li>
+      <li class="list-inline-item"><router-link class="nav-link" to="/shortcodes" v-bind:title="$t('shortcodes')" exact>{{ $t('shortcodes') }}</router-link></li>
+      <li class="list-inline-item"><a class="nav-link" href="https://github.com/adrianmanchev" target="_blank">{{ $t('about') }}</a></li>
     </ul>
     <p class="copyright">adrianmanchev © {{ year }}</p>
   </footer>

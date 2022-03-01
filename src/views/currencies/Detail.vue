@@ -3,7 +3,7 @@
     <img v-bind:src="currency.logo" v-bind:alt="currency.name" width="48" height="48" class="rounded-circle" />
     <div class="d-title">
       <h2 class="display-6 fw-light mb-0">{{ info.symbol }}</h2>
-      <h3 class="fw-normal text-muted fs-6 mb-0 lh-sm">{{ currency.name }} price</h3>
+      <h3 class="fw-normal text-muted fs-6 mb-0 lh-sm">{{ $t('currencyprice', { name: currency.name }) }}</h3>
     </div>
     <div v-if="ticker.price" class="d-ticker">
       <div class="display-6 fw-light">{{ ticker.localePrice }} {{ info.quote }}</div>
@@ -14,8 +14,8 @@
     <div class="col-lg-3">
       <div class="border rounded">
         <div class="px-3 pt-3">
-          <h3 class="fs-4 fw-normal">Trending assets</h3>
-          <p>Individual cryptocurrency exchanges' most popular assets have risen in popularity over time.</p>
+          <h3 class="fs-4 fw-normal">{{ $t('trending') }}</h3>
+          <p>{{ $t('trendingdescription') }}</p>
         </div>
         <div class="list-group list-group-flush">
           <list view="list-item" />
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="mt-3">
-        <h3 class="fs-4 fw-normal">Overview</h3>
+        <h3 class="fs-4 fw-normal">{{ $t('overview') }}</h3>
         <div class="d-flex flex-column flex-xl-row gap-3">
           <div class="d-ticker-card border rounded pt-3 pb-2 ps-3 pe-4">
             <div class="d-ticker-card-header d-flex align-items-center gap-3">
@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="d-ticker-card-body mt-2 text-nowrap">
-              <span class="d-ticker-card-price fs-4 fw-bold">{{ ticker.localePrice }}</span>
+              <span class="d-ticker-card-price fs-3 fw-bold">{{ ticker.localePrice }}</span>
               <span class="d-ticker-card-change ms-4"><arrow v-bind:direction="ticker.direction" /> {{ ticker.change }} %</span>
               <span class="d-ticker-card-rate ms-2 text-secondary">({{ ticker.changePrice }} {{ info.quote }})</span>
             </div>
@@ -59,7 +59,7 @@
           <div class="d-ticker-card border rounded pt-3 pb-2 ps-3 pe-4 flex-fill">
             <div class="d-ticker-card-header">
               <div class="d-ticker-card-title">
-                <h2 class="fs-6 fw-normal mb-0 text-nowrap">{{ info.name }} low and high prices in selected time frame</h2>
+                <h2 class="fs-6 fw-normal mb-0 text-nowrap">{{ $t('highlow') }}</h2>
               </div>
             </div>
             <div class="d-ticker-card-body mt-4">
@@ -67,8 +67,8 @@
                 <div class="progress">
                   <div class="progress-bar" role="progressbar" v-bind:style="'width: ' + progressWidth + '%'" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <small class="position-absolute bottom-0 start-0">{{ $filters.format(stats.low, info.priceScale) }}</small>
-                <small class="position-absolute bottom-0 end-0">{{ $filters.format(stats.high, info.priceScale) }}</small>
+                <small class="position-absolute bottom-0 start-0">{{ $filters.format(stats.low, info.priceScale) }} {{ info.quote }}</small>
+                <small class="position-absolute bottom-0 end-0">{{ $filters.format(stats.high, info.priceScale) }} {{ info.quote }}</small>
               </div>
             </div>
           </div>

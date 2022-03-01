@@ -1,0 +1,20 @@
+{
+  "about": "About",
+  "home": "Home",
+  "shortcodes": "Shortcodes",
+  "description": "Example Vue.js website demonstrating how to listen to the Binance Websocket server and trade charts using D3.js",
+  "overview": "Overview",
+  "trending": "Trending assets",
+  "trendingdescription": "Individual cryptocurrency exchanges' most popular assets have risen in popularity over time.",
+  "currencyprice": "{name} price",
+  "more": "Find out more information and trading charts for {action}.",
+  "top": "top currencies",
+  "toptitle": "Top Currencies",
+  "sourcecode": "SOURCE CODE",
+  "liveprices": "Live Prices",
+  "detail": "Detail",
+  "name": "Name",
+  "price": "Price",
+  "dailychange": "Daily change",
+  "highlow": "Low and high prices in selected time frame"
+}

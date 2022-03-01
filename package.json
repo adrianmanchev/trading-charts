@@ -1,12 +1,13 @@
 {
   "name": "trading-charts",
   "version": "0.1.0",
-  "description": "Example Vue.js website demonstrating how to listen to the Binance Websocket server and trade charts using d3.js.",
   "private": true,
+  "description": "Example Vue.js website demonstrating how to listen to the Binance Websocket server and trade charts using d3.js.",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
     "axios": "^0.24.0",
@@ -15,10 +16,12 @@
     "d3": "^7.3.0",
     "register-service-worker": "^1.7.1",
     "vue": "^3.0.0",
+    "vue-i18n": "^9.1.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^3.0.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-pwa": "~4.5.0",
@@ -33,7 +36,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "vue-cli-plugin-i18n": "~2.3.1"
   },
   "keywords": [
     "crypto",

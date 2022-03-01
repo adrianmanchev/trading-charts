@@ -58,7 +58,7 @@ export default {
       },
       {
         key: 'd3-js',
-        name: 'd3.js',
+        name: 'D3.js',
         title: 'VISUALIZING',
         url: 'https://github.com/d3/d3',
         description: 'Library for visualizing data using web standards',

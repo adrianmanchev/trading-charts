@@ -18,7 +18,7 @@
     </td>
     <td class="text-end">
       <div class="d-grid d-flex justify-content-end">
-        <router-link v-bind:to="'/currencies/' + info.slug" v-bind:class="'btn btn-light btn-sm col-lg-6' + (isActive ? '' : ' disabled')" role="button" v-bind:title="info.name + ' Charts'">Detail</router-link>
+        <router-link v-bind:to="'/currencies/' + info.slug" v-bind:class="'btn btn-light btn-sm col-lg-6' + (isActive ? '' : ' disabled')" role="button" v-bind:title="info.name + ' Charts'">{{ $t('detail') }}</router-link>
       </div>
     </td>
   </tr>

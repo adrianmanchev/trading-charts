@@ -216,26 +216,72 @@ export default (data, {
       .attr('x2', chartWidth * -1)
       .attr('stroke-opacity', 0.05))
 
-  const areaPath = svg.append('path')
-    .attr('fill', 'url(#areaGradient)')
-    .call(UPDATE_AREA)
+  const drawAreaPath = () => {
+    svg.selectAll('.area-path')
+      .data([data])
+      .join(
+        enter =>
+          enter
+            .append('path')
+            .attr('class', 'area-path')
+            .attr('fill', 'url(#areaGradient)')
+            .call(UPDATE_AREA),
+        update =>
+          update
+            .transition()
+            .duration(duration)
+            .call(UPDATE_AREA)
+      )
+  }
 
-  const definedPath = svg.append('path')
-    .attr('fill', 'none')
-    .attr('stroke', colors.crosshair)
-    .attr('stroke-width', strokeWidth)
-    .attr('stroke-opacity', 0.21)
-    .attr('stroke-dasharray', '1, 4')
-    .call(UPDATE_DEFINED)
+  const drawDefinedPath = () => {
+    svg.selectAll('.defined-path')
+      .data([data])
+      .join(
+        enter =>
+          enter
+            .append('path')
+            .attr('class', 'defined-path')
+            .attr('fill', 'none')
+            .attr('stroke', colors.crosshair)
+            .attr('stroke-width', strokeWidth)
+            .attr('stroke-opacity', 0.21)
+            .attr('stroke-dasharray', '1, 4')
+            .call(UPDATE_DEFINED),
+        update =>
+          update
+            .transition()
+            .duration(duration)
+            .call(UPDATE_DEFINED)
+      )
+  }
 
-  const linePath = svg.append('path')
-    .attr('fill', 'none')
-    .attr('stroke', 'url(#linearGradient)')
-    .attr('stroke-width', strokeWidth)
-    .attr('stroke-linecap', strokeLinecap)
-    .attr('stroke-linejoin', strokeLinejoin)
-    .attr('stroke-opacity', strokeOpacity)
-    .call(UPDATE_LINE)
+  const drawLinePath = () => {
+    svg.selectAll('.line-path')
+      .data([data])
+      .join(
+        enter =>
+          enter
+            .append('path')
+            .attr('class', 'line-path')
+            .attr('fill', 'none')
+            .attr('stroke', 'url(#linearGradient)')
+            .attr('stroke-width', strokeWidth)
+            .attr('stroke-linecap', strokeLinecap)
+            .attr('stroke-linejoin', strokeLinejoin)
+            .attr('stroke-opacity', strokeOpacity)
+            .call(UPDATE_LINE),
+        update =>
+          update
+            .transition()
+            .duration(duration)
+            .call(UPDATE_LINE)
+      )
+  }
+
+  drawAreaPath()
+  drawDefinedPath()
+  drawLinePath()
 
   const live = svg.append('g')
     .style('pointer-events', 'none')
@@ -465,15 +511,9 @@ export default (data, {
       .duration(duration)
       .call(yAxis)
 
-    areaPath.transition()
-      .duration(duration)
-      .call(UPDATE_AREA)
-    definedPath.transition()
-      .duration(duration)
-      .call(UPDATE_DEFINED)
-    linePath.transition()
-      .duration(duration)
-      .call(UPDATE_LINE)
+    drawAreaPath()
+    drawDefinedPath()
+    drawLinePath()
 
     live.call(UPDATE_TEXT)
       .transition()

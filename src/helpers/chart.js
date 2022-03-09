@@ -29,6 +29,7 @@ export default (data, {
   const py = 16
   const chartWidth = width - marginRight - marginLeft
   const chartHeight = height - marginTop - marginBottom
+  const chartDuration = duration
 
   const colors = {
     up: '#34c759',
@@ -61,6 +62,8 @@ export default (data, {
     I = d3.map(data, (_, i) => i)
 
     D = d3.map(data, (d, i) => X[i] && Y[i])
+
+    duration = (window.PageVisibility || {}).hidden ? 0 : chartDuration
 
     const yt = height / 80
     const ymin = d3.min(Y)
@@ -202,8 +205,7 @@ export default (data, {
     .call(xAxis)
     .attr('font-family', 'inherit')
     .call(g => g.select('.domain').attr('stroke-width', 0))
-    .call(g => g.selectAll('.tick line')
-      .attr('stroke-opacity', 0.50))
+    .call(g => g.selectAll('.tick line').attr('stroke-opacity', 0.50))
 
   const gy = svg.append('g')
     .attr('transform', `translate(${width - marginRight}, 0)`)

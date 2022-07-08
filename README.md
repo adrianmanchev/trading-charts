@@ -1,3 +1,5 @@
+[![SonarCloud analysis](https://github.com/adrianmanchev/trading-charts/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/adrianmanchev/trading-charts/actions/workflows/sonarcloud.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=adrianmanchev_trading-charts&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=adrianmanchev_trading-charts) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=adrianmanchev_trading-charts&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=adrianmanchev_trading-charts) ![W3C Validation](https://img.shields.io/w3c-validation/html?targetUrl=https%3A%2F%2Fadrianmanchev.github.io%2Ftrading-charts%2F)
+
 # trading-charts
 
 Example Vue.js website demonstrating how to listen to the Binance Websocket server and trade charts using d3.js.

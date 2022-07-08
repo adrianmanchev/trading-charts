@@ -2,14 +2,14 @@ import { createStore } from 'vuex'
 
 const slugs = {
   algorand: 'ALGO',
-  bnb: 'BNB',
-  bittorrent: 'BTT',
-  cardano: 'ADA',
   bitcoin: 'BTC',
-  polkadot: 'DOT',
+  bnb: 'BNB',
+  cardano: 'ADA',
   ethereum: 'ETH',
+  polkadot: 'DOT',
+  ripple: 'XRP',
   solana: 'SOL',
-  ripple: 'XRP'
+  tron: 'TRX'
 }
 
 export default createStore({
@@ -24,11 +24,11 @@ export default createStore({
       'algousdt',
       'bnbusdt',
       'btcusdt',
-      'bttusdt',
       'dotusdt',
       'ethusdt',
       'solusdt',
-      'xrpusdt'
+      'xrpusdt',
+      'trxusdt'
     ],
     tickers: {},
     infos: {},
@@ -62,16 +62,6 @@ export default createStore({
         },
         about: 'Launched in July 2017, Binance is the biggest cryptocurrency exchange globally based on daily trading volume. Binance aims to bring cryptocurrency exchanges to the forefront of financial activity globally.',
         logo: require('../assets/img/bnb.png')
-      },
-      BTT: {
-        name: 'BitTorrent',
-        slug: 'bittorrent',
-        symbol: 'btt',
-        urls: {
-          website: 'https://www.bittorrent.com/btt'
-        },
-        about: 'BitTorrent is a popular peer-to-peer (P2P) file sharing and torrent platform which has become increasingly decentralized in recent years.',
-        logo: require('../assets/img/btt.png')
       },
       BTC: {
         name: 'Bitcoin',
@@ -112,6 +102,16 @@ export default createStore({
         },
         about: 'Solana is a highly functional open source project that banks on blockchain technology’s permissionless nature to provide decentralized finance (DeFi) solutions.',
         logo: require('../assets/img/sol.png')
+      },
+      TRX: {
+        name: 'Tron',
+        slug: 'tron',
+        symbol: 'trx',
+        urls: {
+          website: 'https://tron.network'
+        },
+        about: 'TRON (TRX) is a decentralized blockchain-based operating system developed by the Tron Foundation and launched in 2017. Originally TRX tokens were ERC-20-based tokens deployed on Ethereum, but a year later they were moved to their own network.',
+        logo: require('../assets/img/trx.png')
       },
       XRP: {
         name: 'Ripple',

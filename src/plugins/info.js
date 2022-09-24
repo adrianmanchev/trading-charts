@@ -12,8 +12,9 @@ export default {
       for (let j = 0; j < total; j++) {
         const item = items[j]
         const meta = store.state.metas[item.baseAsset] || {}
-        const unit = store.state.units[item.quoteAsset]
+        const unit = store.state.units[item.quoteAsset] || {}
         const PRICE_DECIMAL = (item.filters.filter(x => x.filterType === 'PRICE_FILTER')[0] || {}).tickSize || 0.0001
+        const LOT_DECIMAL = (item.filters.filter(x => x.filterType === 'LOT_SIZE')[0] || {}).minQty || 0.0001
 
         store.commit('UPDATE_INFO', {
           symbol: item.baseAsset,
@@ -21,9 +22,11 @@ export default {
           name: meta.name,
           slug: meta.slug,
           quote: item.quoteAsset,
-          unit: unit,
+          quoteLabel: unit.label,
+          quoteLogo: unit.logo,
           pair: item.symbol.toLowerCase(),
           status: item.status,
+          lotScale: arithmetic.abs(arithmetic.exponent(LOT_DECIMAL)).toNumber() + 1,
           priceScale: arithmetic.abs(arithmetic.exponent(PRICE_DECIMAL)).toNumber()
         })
       }

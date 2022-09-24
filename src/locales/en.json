@@ -4,6 +4,7 @@
   "shortcodes": "Shortcodes",
   "description": "Example Vue.js website demonstrating how to listen to the Binance Websocket server and trade charts using D3.js",
   "overview": "Overview",
+  "converter": "{quote} to {symbol} converter",
   "trending": "Trending assets",
   "trendingdescription": "Individual cryptocurrency exchanges' most popular assets have risen in popularity over time.",
   "currencyprice": "{name} price",
@@ -16,5 +17,7 @@
   "name": "Name",
   "price": "Price",
   "dailychange": "Daily change",
-  "highlow": "Low and high prices in selected time frame"
+  "low": "Low",
+  "high": "High",
+  "highlow": "Prices in selected time frame"
 }

@@ -15,7 +15,7 @@
       <small class="pair-daily-change">
         <template v-if="!ticker.change">-</template>
         <template v-else>
-          <arrow v-bind:direction="ticker.direction" /> {{ ticker.change }} %
+          <arrow v-bind:direction="ticker.direction" /> {{ ticker.change }}%
         </template>
       </small>
     </div>

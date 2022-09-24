@@ -4,6 +4,7 @@
   "shortcodes": "Kod betikleri",
   "description": "Websocket ile Binance bağlantısı kurulumu ve güncel kripto para fiyatlarının D3.js kullanılarak nasıl bir fiyat grafiğine dönüştüreleceğini gösteren örnek Vue.js projesi",
   "overview": "Genel Bakış",
+  "converter": "{quote} / {symbol} fiyat dönüştürücü",
   "trending": "Trend varlıklar",
   "trendingdescription": "Kripto para borsalarda tüm zamanlarda popüleritesi en fazla olan varlıklar.",
   "currencyprice": "{name} fiyatı",
@@ -16,5 +17,7 @@
   "name": "İsim",
   "price": "Fiyat",
   "dailychange": "Günlük değişim",
-  "highlow": "Seçilen zaman diliminde en düşük ve en yüksek fiyatlar"
+  "low": "Düşük",
+  "high": "Yüksek",
+  "highlow": "Seçilen zaman dilimi fiyatları"
 }

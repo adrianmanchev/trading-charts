@@ -9,7 +9,7 @@
     <td v-bind:class="'pair-daily-change text-end color-' + ticker.direction">
       <template v-if="!ticker.change">-</template>
       <template v-else>
-        <arrow v-bind:direction="ticker.direction" /> {{ ticker.change }} %
+        <arrow v-bind:direction="ticker.direction" /> {{ ticker.change }}%
       </template>
     </td>
     <td class="text-end fw-bold">

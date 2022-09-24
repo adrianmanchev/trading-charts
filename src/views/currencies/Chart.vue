@@ -122,11 +122,12 @@ export default {
   padding: 7px 8px;
   text-transform: uppercase;
   line-height: 14px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 900;
   white-space: nowrap;
   border-radius: 0.25rem;
   cursor: pointer;
+  opacity: 0.75;
 }
 .d-tabs-list .d-tabs:hover {
   background-color: rgb(247, 247, 252);
@@ -134,6 +135,7 @@ export default {
 .d-tabs-list .d-tabs.active,
 .d-tabs-list .d-tabs.active:hover {
   background-color: white;
+  opacity: 1;
 }
 .chart-content {
   top: 0;

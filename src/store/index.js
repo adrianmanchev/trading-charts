@@ -125,7 +125,11 @@ export default createStore({
       }
     },
     units: {
-      USDT: 'Tether'
+      USDT: {
+        label: 'Tether',
+        symbol: 'usdt',
+        logo: require('../assets/img/usdt.png')
+      }
     },
     baseUnits: 'usdt',
     graphOptions: {
@@ -138,7 +142,7 @@ export default createStore({
   },
   getters: {
     topCurrencies: state => {
-      return state.top.map(symbol => (({ about, logo, name, slug, symbol }) => ({ about, logo, name, slug, symbol }))(state.metas[symbol]))
+      return state.top.map(short => (({ about, logo, name, slug, symbol }) => ({ about, logo, name, slug, symbol }))(state.metas[short]))
     },
     getCurrencyBySlug: (state) => (slug) => {
       return state.metas[slugs[slug]] || {}
